@@ -3,9 +3,26 @@ version: '3'
 
 services:
 
+  activemq:
+    image: rmohr/activemq:5.15.5
+    container_name: activemq
+    hostname: "activemq"
+    environment:
+      - "TZ=Europe/Berlin"
+    networks:
+      - mesh
+    volumes:
+      - "./activemq/activemq.xml:/conf/activemq.xml"
+    ports:
+      - "61616:61616" # broker (admin:adminactivemq)(amq:amq)
+      - "8161:8161"   # web    http://boot2docker:8161/admin (admin:admin)
+
   rabbitmq:
     image: "rabbitmq:3-management"
     hostname: "rabbitmq"
+    container_name: rabbitmq
+    networks:
+      - mesh
     environment:
       RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
       RABBITMQ_DEFAULT_USER: "rabbitmq"
@@ -67,7 +84,8 @@ services:
       SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: zookeeper:2181
 
   kafka-connect-cp:
-    image: confluentinc/cp-kafka-connect:5.2.1
+    build: connect/
+    container_name: kafka-connect-cp
     networks:
       - mesh
     depends_on:
@@ -102,6 +120,7 @@ services:
 # Other systems
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.3.0
+    container_name: elasticsearch
     ports:
       - 9200:9200
     environment:

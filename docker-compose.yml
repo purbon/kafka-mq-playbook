@@ -74,14 +74,18 @@ services:
 
   schema-registry:
     image: confluentinc/cp-schema-registry:5.2.1
+    container_name: schema-registry
     networks:
       - mesh
     depends_on:
       - zookeeper
       - kafka
+    ports:
+      - 18081:18081
     environment:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
       SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: zookeeper:2181
+      SCHEMA_REGISTRY_LISTENERS: "http://0.0.0.0:18081"
 
   kafka-connect-cp:
     build: connect/

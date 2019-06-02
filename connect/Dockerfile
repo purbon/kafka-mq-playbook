@@ -4,3 +4,5 @@ ENV container docker
 
 # 1. install kafka connect rabbitmq
 RUN confluent-hub install confluentinc/kafka-connect-rabbitmq:1.0.0-preview --no-prompt
+
+COPY plugins/Transformations-1.0-jar-with-dependencies.jar /usr/share/java

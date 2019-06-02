@@ -14,7 +14,7 @@ public class SelectorRouter<R extends ConnectRecord<R>> implements Transformatio
 
     Header header = record.headers().lastWithName(config.getErrorHeaderField());
 
-    if ((Boolean)header.value()) {
+    if (header != null && (Boolean)header.value()) {
       return record.newRecord(config.getDLQTopicName(), record.kafkaPartition(), record.keySchema(),
           record.key(), record.valueSchema(), record.value(), record.timestamp());
     } else {

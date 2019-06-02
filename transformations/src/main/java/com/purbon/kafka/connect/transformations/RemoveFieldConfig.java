@@ -15,7 +15,7 @@ public class RemoveFieldConfig extends AbstractConnectConfig {
   private String fieldToRemove;
 
   public RemoveFieldConfig(Map<?, ?> originals) {
-    super(originals);
+    super(config(), originals);
 
     this.fieldToRemove = getString(FIELD_TO_REMOVE_CONF);
   }

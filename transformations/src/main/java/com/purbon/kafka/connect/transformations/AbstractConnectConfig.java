@@ -5,6 +5,7 @@ import org.apache.kafka.common.config.ConfigDef;
 import java.util.Map;
 import org.apache.kafka.common.config.ConfigDef.Importance;
 import org.apache.kafka.common.config.ConfigDef.NonEmptyString;
+import org.apache.kafka.common.config.ConfigDef.NonNullValidator;
 import org.apache.kafka.common.config.ConfigDef.Type;
 
 public abstract class AbstractConnectConfig extends AbstractConfig {
@@ -15,8 +16,8 @@ public abstract class AbstractConnectConfig extends AbstractConfig {
 
   private String errorHeaderField;
 
-  public AbstractConnectConfig(Map<?, ?> originals) {
-    super(config(), originals);
+  public AbstractConnectConfig(ConfigDef config, Map<?, ?> originals) {
+    super(config, originals);
     this.errorHeaderField = getString(ERROR_HEADER_FIELD_CONF);
   }
 
@@ -25,7 +26,7 @@ public abstract class AbstractConnectConfig extends AbstractConfig {
         .define(ERROR_HEADER_FIELD_CONF,
         Type.STRING,
         ERROR_HEADER_FIELD_DEFAULT,
-        new NonEmptyString(),
+        new NonNullValidator(),
         Importance.HIGH,
         ERROR_HEADER_FIELD_DOC);
   }

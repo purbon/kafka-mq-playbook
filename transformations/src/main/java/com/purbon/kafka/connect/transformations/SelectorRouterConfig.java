@@ -18,7 +18,7 @@ public class SelectorRouterConfig extends AbstractConnectConfig {
   private String dlqTopicName;
 
   public SelectorRouterConfig(Map<?, ?> originals) {
-    super(originals);
+    super(config(), originals);
 
     this.dlqTopicName = getString(DLQ_FIELD_CONF);
   }

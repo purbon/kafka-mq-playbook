@@ -11,6 +11,8 @@ import org.apache.kafka.connect.data.SchemaBuilder;
 import org.apache.kafka.connect.data.Struct;
 import org.apache.kafka.connect.transforms.Transformation;
 import org.apache.kafka.connect.transforms.util.SchemaUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class FlagMessagesWithErrors<R extends ConnectRecord<R>> implements Transformation<R> {
 
@@ -24,13 +26,16 @@ public class FlagMessagesWithErrors<R extends ConnectRecord<R>> implements Trans
     }
   }
 
+  private Logger logger = LoggerFactory.getLogger(FlagMessagesWithErrors.class);
+
   private FlagMessageWithErrorsConfig config;
 
   public R apply(R record) {
 
-    if (rand.nextInt(100) % 2 == 0) {
-      record.headers().addBoolean(FlagMessageWithErrorsConfig.ERROR_HEADER_FIELD_CONF, true);
+    if (rand.nextBoolean()) {
+      record.headers().addBoolean(config.getErrorHeaderField(), true);
     }
+    logger.debug("Flagging message "+record.toString()+" as containing errors");
 
     return record;
   }

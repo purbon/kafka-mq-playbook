@@ -1,4 +1,4 @@
-#!usr/bin/env sh
+#!/usr/bin/env sh
 
 curl -XDELETE http://kafka-connect-cp:18083/connectors/my-activemq-source-connector
 

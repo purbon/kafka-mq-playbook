@@ -1,3 +1,7 @@
 #!/usr/bin/env bash
 
 docker-compose up -d --build
+
+
+echo "read from ibmmq"
+echo "$> docker exec schema-registry kafka-avro-console-consumer -bootstrap-server broker:9092 --topic MyKafkaTopicName --from-beginning --max-messages 2"

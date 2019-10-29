@@ -18,39 +18,6 @@ services:
       - '1414:1414'
       - '9443:9443'
 
-  activemq:
-    image: rmohr/activemq:5.15.5
-    container_name: activemq
-    hostname: "activemq"
-    environment:
-      - "TZ=Europe/Berlin"
-    networks:
-      - mesh
-    volumes:
-      - "./activemq/activemq.xml:/conf/activemq.xml"
-    ports:
-      - "61616:61616" # broker (admin:adminactivemq)(amq:amq)
-      - "8161:8161"   # web    http://boot2docker:8161/admin (admin:admin)
-
-  rabbitmq:
-    image: "rabbitmq:3-management"
-    hostname: "rabbitmq"
-    container_name: rabbitmq
-    networks:
-      - mesh
-    environment:
-      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
-      RABBITMQ_DEFAULT_USER: "rabbitmq"
-      RABBITMQ_DEFAULT_PASS: "rabbitmq"
-      RABBITMQ_DEFAULT_VHOST: "/"
-    ports:
-      - 15672:15672
-      - 5672:5672
-    labels:
-      NAME: "rabbitmq"
-    volumes:
-      - "./rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins"
-
   zookeeper:
     image: confluentinc/cp-zookeeper:5.2.1
     container_name: zookeeper
@@ -103,7 +70,7 @@ services:
       SCHEMA_REGISTRY_LISTENERS: "http://0.0.0.0:18081"
 
   kafka-connect-cp:
-    build: connect/
+    build: ../connect/
     container_name: kafka-connect-cp
     networks:
       - mesh
@@ -137,20 +104,6 @@ services:
      - ./scripts:/scripts
      - ./ibmmq/com.ibm.mq.allclient.jar:/usr/share/confluent-hub-components/confluentinc-kafka-connect-ibmmq/lib/com.ibm.mq.allclient.jar
      - ./ibmmq/jms.jar:/usr/share/confluent-hub-components/confluentinc-kafka-connect-ibmmq/lib/jms.jar
-
-
-# Other systems
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.3.0
-    container_name: elasticsearch
-    ports:
-      - 9200:9200
-    environment:
-      xpack.security.enabled: "false"
-      ES_JAVA_OPTS: "-Xms1g -Xmx1g"
-    volumes:
-     - $PWD/scripts:/scripts
-
 
 networks:
   mesh:

@@ -5,16 +5,16 @@ COMPOSE_FILE="compose/docker-compose.yml"
 
 if [ "$SERVICE" = "ibmmq" ];
 then
-    echo "Setting up an IBMMQ playbook"
+    echo "Shutting down the IBMMQ playbook"
     COMPOSE_FILE="compose/docker-compose-ibmmq.yml"
 elif [ "$SERVICE" = "activemq" ];
 then
-    echo "Setting up an ActiveMQ playbook"
+    echo "Shutting down the ActiveMQ playbook"
     COMPOSE_FILE="compose/docker-compose-activemq.yml"
 
 elif [ "$SERVICE" = "rabbitmq" ];
 then
-    echo "Setting up a RabbitMQ playbook"
+    echo "Shutting down the RabbitMQ playbook"
     COMPOSE_FILE="compose/docker-compose-rabbitmq.yml"
 else
     echo "Usage(): ./up [activemq | ibmmq | rabbitmq]"
@@ -22,8 +22,4 @@ else
 fi
 
 
-docker-compose -f $COMPOSE_FILE  up -d --build
-
-echo "write/read from ibmmq"
-echo "./scripts/send-to-ibmmq.sh"
-echo "$> docker exec schema-registry kafka-avro-console-consumer -bootstrap-server broker:9092 --topic MyKafkaTopicName --from-beginning --max-messages 2"
+docker-compose -f $COMPOSE_FILE  down

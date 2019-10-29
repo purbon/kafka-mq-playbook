@@ -3,6 +3,22 @@ version: '3'
 
 services:
 
+  db2:
+    image: ibmcom/db2
+    hostname: db2
+    container_name: db2
+    privileged: true
+    networks:
+      - mesh
+    ports:
+      - "50000:50000"
+    environment:
+      LICENSE: accept
+      DB2INST1_PASSWORD: passw0rd
+      DBNAME: testdb
+    volumes:
+      - ../db2:/database
+
   ibmmq:
     image: ibmcom/mq # https://hub.docker.com/r/ibmcom/mq/
     hostname: ibmmq

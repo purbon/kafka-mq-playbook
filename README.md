@@ -8,9 +8,15 @@ This repository contains examples and playbooks useful to bring data from MQ sys
 
 1. Run `./up [activemq, ibmmq, rabbitmq]`
 
-### IBMMQ playbook
+### IBMMQ/DB2 playbook
 
 TBA
+
+Connect to DB2 in the container:
+
+* `docker exec -it db2ContainerId /bin/bash`
+* `su - db2inst1`
+* `db2 connect to testdb user db2inst1 using passw0rd`
 
 ### RabbitMQ playbook
 

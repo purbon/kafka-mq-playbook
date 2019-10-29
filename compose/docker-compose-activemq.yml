@@ -12,7 +12,7 @@ services:
     networks:
       - mesh
     volumes:
-      - "./activemq/activemq.xml:/conf/activemq.xml"
+      - "../activemq/activemq.xml:/conf/activemq.xml"
     ports:
       - "61616:61616" # broker (admin:adminactivemq)(amq:amq)
       - "8161:8161"   # web    http://boot2docker:8161/admin (admin:admin)
@@ -51,7 +51,7 @@ services:
       CONFLUENT_METRICS_ENABLE: 'true'
       CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
     volumes:
-       - ./scripts:/scripts
+       - ../scripts:/scripts
 
   schema-registry:
     image: confluentinc/cp-schema-registry:5.2.1
@@ -100,7 +100,7 @@ services:
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: "1"
       CONNECT_PLUGIN_PATH: '/usr/share/java'
     volumes:
-     - ./scripts:/scripts
+     - ../scripts:/scripts
 
 networks:
   mesh:

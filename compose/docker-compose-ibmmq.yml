@@ -52,7 +52,7 @@ services:
       CONFLUENT_METRICS_ENABLE: 'true'
       CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
     volumes:
-       - ./scripts:/scripts
+       - ../scripts:/scripts
 
   schema-registry:
     image: confluentinc/cp-schema-registry:5.2.1
@@ -101,9 +101,9 @@ services:
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: "1"
       CONNECT_PLUGIN_PATH: '/usr/share/java'
     volumes:
-     - ./scripts:/scripts
-     - ./ibmmq/com.ibm.mq.allclient.jar:/usr/share/confluent-hub-components/confluentinc-kafka-connect-ibmmq/lib/com.ibm.mq.allclient.jar
-     - ./ibmmq/jms.jar:/usr/share/confluent-hub-components/confluentinc-kafka-connect-ibmmq/lib/jms.jar
+     - ../scripts:/scripts
+     - ../ibmmq/com.ibm.mq.allclient.jar:/usr/share/confluent-hub-components/confluentinc-kafka-connect-ibmmq/lib/com.ibm.mq.allclient.jar
+     - ../ibmmq/jms.jar:/usr/share/confluent-hub-components/confluentinc-kafka-connect-ibmmq/lib/jms.jar
 
 networks:
   mesh:
